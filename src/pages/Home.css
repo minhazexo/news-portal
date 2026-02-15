@@ -1,0 +1,165 @@
+.hero {
+  position: relative;
+  margin-bottom: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.hero img {
+  width: 100%;
+  height: 400px;
+  object-fit: cover;
+}
+
+.hero-text {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 15px;
+  border-radius: 6px;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+}
+
+.news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.sidebar {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  height: fit-content;
+}
+
+.sidebar p {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+/* Content Grid */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .hero img {
+    height: 250px;
+  }
+
+  .hero-text {
+    position: static;
+    padding: 10px;
+    background: rgba(0,0,0,0.6);
+    color: white;
+  }
+
+  .sidebar {
+    display: none; /* hide trending on small screens */
+  }
+
+  .category-filter button {
+    padding: 6px 8px;
+    font-size: 12px;
+    margin-bottom: 5px;
+  }
+}
+.dark body {
+  background: #121212;
+  color: #ddd;
+}
+
+.dark .news-card,
+.dark .sidebar,
+.dark .hero-text {
+  background: #1e1e1e;
+  color: white;
+}
+
+.dark a {
+  color: #ddd;
+}
+
+.dark a:hover {
+  color: #ff4500;
+}
+
+.loading {
+  font-size: 18px;
+  text-align: center;
+  margin: 50px 0;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  gap: 15px;
+}
+
+.pagination button {
+  padding: 8px 15px;
+  border: none;
+  background: #d60000;
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.pagination button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}
+/* Home.css */
+/* Skeletons */
+.skeleton {
+  background: #ddd;
+  height: 180px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  animation: pulse 1.5s infinite;
+}
+
+.hero-skeleton {
+  height: 250px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+/* Content Grid */
+.content {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 20px;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    display: none;
+  }
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
