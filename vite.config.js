@@ -3,6 +3,8 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/news-portal/',   // 🔥 VERY IMPORTANT
+
   plugins: [
     react(),
     VitePWA({
@@ -14,15 +16,16 @@ export default defineConfig({
         theme_color: '#d60000',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/',
+        start_url: '/news-portal/',   // 🔥 FIXED
+
         icons: [
           {
-            src: '/logo192.png',
+            src: 'logo192.png',   // 🔥 remove starting slash
             sizes: '192x192',
             type: 'image/png'
           },
           {
-            src: '/logo512.png',
+            src: 'logo512.png',   // 🔥 remove starting slash
             sizes: '512x512',
             type: 'image/png'
           }
