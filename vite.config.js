@@ -3,12 +3,21 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/news-portal/',   // 🔥 VERY IMPORTANT
+  base: '/news-portal/',  // ✅ GitHub Pages path
 
   plugins: [
     react(),
     VitePWA({
       registerType: 'autoUpdate',
+      injectRegister: 'auto',
+      workbox: {
+        inlineWorkboxRuntime: true,
+        sourcemap: false,
+        terser: false          // ❌ disables minify to prevent Termux crash
+      },
+      devOptions: {
+        enabled: false          // ❌ disables PWA in dev mode
+      },
       manifest: {
         name: 'DailyNews Portal',
         short_name: 'DailyNews',
@@ -16,19 +25,10 @@ export default defineConfig({
         theme_color: '#d60000',
         background_color: '#ffffff',
         display: 'standalone',
-        start_url: '/news-portal/',   // 🔥 FIXED
-
+        start_url: '/news-portal/',
         icons: [
-          {
-            src: 'logo192.png',   // 🔥 remove starting slash
-            sizes: '192x192',
-            type: 'image/png'
-          },
-          {
-            src: 'logo512.png',   // 🔥 remove starting slash
-            sizes: '512x512',
-            type: 'image/png'
-          }
+          { src: 'logo192.png', sizes: '192x192', type: 'image/png' },
+          { src: 'logo512.png', sizes: '512x512', type: 'image/png' }
         ]
       }
     })
