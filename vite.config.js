@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
-  base: '/news-portal/',  // ✅ GitHub Pages path
+  base: '/news-portal/',  // 🔥 Must match your GitHub Pages repo name
 
   plugins: [
     react(),
@@ -12,12 +12,9 @@ export default defineConfig({
       injectRegister: 'auto',
       workbox: {
         inlineWorkboxRuntime: true,
-        sourcemap: false,
-        terser: false          // ❌ disables minify to prevent Termux crash
+        terser: false,       // ❌ Disable Terser for Termux
       },
-      devOptions: {
-        enabled: false          // ❌ disables PWA in dev mode
-      },
+      devOptions: { enabled: false }, // PWA disabled in dev
       manifest: {
         name: 'DailyNews Portal',
         short_name: 'DailyNews',
