@@ -1,31 +1,50 @@
 import { useEffect, useState } from "react";
-import { fetchTopNews } from "../services/api";
+import { fetchLatestNews, fetchNews } from "../services/api";
 import NewsCard from "../components/NewsCard";
 import { motion } from "framer-motion";
 import "./Home.css";
 
 const categories = [
-  { name: "general", icon: "📰" },
+  { name: "top", icon: "📰" },
   { name: "business", icon: "💼" },
   { name: "technology", icon: "💻" },
   { name: "sports", icon: "🏅" },
+  { name: "entertainment", icon: "🎬" },
 ];
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [category, setCategory] = useState("general");
+  const [category, setCategory] = useState("top");
   const [page, setPage] = useState(1);
   const perPage = 6;
 
   useEffect(() => {
     setLoading(true);
-    fetchTopNews(page, perPage, category)
-      .then((data) => {
-        setArticles(data);
-        setLoading(false);
-      })
-      .catch(console.error);
+
+    if (category === "top") {
+      // Top news = latest news
+      fetchLatestNews(page)
+        .then((data) => {
+          setArticles(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setArticles([]);
+          setLoading(false);
+        });
+    } else {
+      // Category filtered news
+      fetchNews(page, category)
+        .then((data) => {
+          setArticles(data);
+          setLoading(false);
+        })
+        .catch(() => {
+          setArticles([]);
+          setLoading(false);
+        });
+    }
   }, [page, category]);
 
   const topHeadline = articles[0];
@@ -37,38 +56,46 @@ export default function Home() {
       <div className="category-filter">
         {categories.map((cat) => (
           <button
-  key={cat.name}
-  className={cat.name === category ? "active" : ""}
-  onClick={() => { setCategory(cat.name); setPage(1); }}
->
-  <span className="icon">{cat.icon}</span>
-  {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)}
-</button>
+            key={cat.name}
+            className={cat.name === category ? "active" : ""}
+            onClick={() => {
+              setCategory(cat.name);
+              setPage(1);
+            }}
+          >
+            <span className="icon">{cat.icon}</span>
+            {cat.name.charAt(0).toUpperCase() + cat.name.slice(1)}
+          </button>
         ))}
       </div>
 
       {/* Hero */}
       {loading ? (
         <div className="skeleton hero-skeleton"></div>
-      ) : (
+      ) : topHeadline ? (
         <motion.section
           className="hero"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
         >
-          <img src={topHeadline.image} alt={topHeadline.title} />
+          <img
+            src={topHeadline.image_url || "/logo192.png"}
+            alt={topHeadline.title}
+          />
           <div className="hero-text">
             <h1>{topHeadline.title}</h1>
             <p>{topHeadline.description}</p>
           </div>
         </motion.section>
+      ) : (
+        <p>No news found.</p>
       )}
 
       {/* Grid + Sidebar */}
       <div className="content">
         <div className="news-grid">
           {loading
-            ? Array.from({ length: 6 }).map((_, i) => (
+            ? Array.from({ length: perPage }).map((_, i) => (
                 <div key={i} className="skeleton"></div>
               ))
             : otherArticles.map((article, index) => (
@@ -76,7 +103,7 @@ export default function Home() {
               ))}
         </div>
 
-        {!loading && (
+        {!loading && otherArticles.length > 0 && (
           <aside className="sidebar">
             <h3>Trending</h3>
             {otherArticles.slice(0, 5).map((article, index) => (
@@ -87,7 +114,7 @@ export default function Home() {
       </div>
 
       {/* Pagination */}
-      {!loading && (
+      {!loading && articles.length > 0 && (
         <div className="pagination">
           <button onClick={() => setPage((p) => Math.max(p - 1, 1))}>
             Prev

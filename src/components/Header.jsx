@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import logo from "../assets/logo192.png";
 import { FaSearch, FaMoon, FaSun } from "react-icons/fa";
 import "./Header.css";
 
@@ -17,14 +18,14 @@ export default function Header({ darkMode, toggleDarkMode }) {
   return (
     <header className={`header ${darkMode ? "dark" : ""}`}>
       <div className="logo-container">
-        <img src="/logo192.png" alt="DailyNews Logo" className="logo-img" />
-        <h2 className="logo-text">DailyNews</h2>
+        <img src={logo} alt="DailyNews Logo" className="logo-img" />
+        <h2 className="logo-text">ডেইলি নিউজ</h2>
       </div>
 
       <form className="search-form" onSubmit={handleSearch}>
         <input
           type="text"
-          placeholder="Search news..."
+          placeholder="খবর খুঁজুন..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />

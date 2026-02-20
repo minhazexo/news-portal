@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import "./NewsCard.css";
 
 export default function NewsCard({ article }) {
+  const imageUrl = article.image_url || "/logo192.png"; // fallback
+  const title = article.title || "শিরোনাম পাওয়া যায়নি";
+  const description = article.description || "বিবরণ পাওয়া যায়নি";
+
   return (
     <motion.div
       className="news-card"
@@ -10,10 +14,10 @@ export default function NewsCard({ article }) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
     >
-      <img src={article.image || "/logo192.png"} alt={article.title} />
+      <img src={imageUrl} alt={title} />
       <div className="news-content">
-        <h3>{article.title}</h3>
-        <p>{article.description}</p>
+        <h3>{title}</h3>
+        <p>{description}</p>
       </div>
     </motion.div>
   );
