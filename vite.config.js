@@ -11,7 +11,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      workbox: { inlineWorkboxRuntime: true, terser: false },
+      workbox: { inlineWorkboxRuntime: true }, // ✅ removed terser
       devOptions: { enabled: false },
       manifest: {
         name: 'DailyNews Portal',
